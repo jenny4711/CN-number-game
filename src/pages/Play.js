@@ -4,7 +4,7 @@ import React from "react";
 
 const Play = () => {
   const [userNum, setUserNum] = useState("");
-  const [randomNum, setRandomNum] = useState(0);
+  const [randomNum, setRandomNum] = useState("");
   const [less, setLess] = useState("");
   const [msg, setMsg] = useState("");
   const [src, setSrc] = useState(
@@ -69,13 +69,14 @@ console.log(randomNum)
   // Reset Button
   const reset = () => {
     setUserNum("");
-    setRandomNum("");
+   setRandomNum("")
     setLess("");
     setMsg("");
     setGameOver(false);
     setChance(5);
     setHistory([]);
     setSrc("");
+    makeRandom();
  setSrc("https://media.giphy.com/media/PKxsxsl3aOH1ihZ3Um/giphy.gif");
   };
 
