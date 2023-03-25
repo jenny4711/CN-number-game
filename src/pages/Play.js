@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import '../App.css'
+import "../App.css";
 import React from "react";
 
 const Play = () => {
@@ -7,86 +7,66 @@ const Play = () => {
   const [randomNum, setRandomNum] = useState(0);
   const [less, setLess] = useState("");
   const [msg, setMsg] = useState("");
-  const [src,setSrc]=useState("https://media.giphy.com/media/PKxsxsl3aOH1ihZ3Um/giphy.gif")
+  const [src, setSrc] = useState(
+    "https://media.giphy.com/media/PKxsxsl3aOH1ihZ3Um/giphy.gif"
+  );
   const [gameOver, setGameOver] = useState(false);
   const [chance, setChance] = useState(5);
   const [history, setHistory] = useState([]);
-  const [dup,setDup]=useState("");
+  const [dup, setDup] = useState("");
   const focusInput = useRef();
   const makeFocus = () => (focusInput.current.value = "");
- console.log(msg)
-// get Random Number
+ 
+  // get Random Number
   const makeRandom = () => {
     let random = Math.floor(Math.random() * 100) + 1;
     setRandomNum(random);
   };
-
-  
-  
+console.log(randomNum)
   useEffect(() => {
     makeRandom();
-   
   }, []);
-  
-  
-// InputValue
+
+  // InputValue
   const handleChange = (e) => {
-
     setUserNum(e.target.value);
-    
-
   };
   // Submit Button
-  console.log(msg)
+
   const submitBtn = (evt) => {
     evt.preventDefault();
-    
-  
-    
-  //  Order
-   
-      if (userNum > 100) {
-        setSrc("https://media.giphy.com/media/XJzinpzkMZZo8KcSP5/giphy.gif")
-        setMsg("Please Choose Less Than 101");
-    }
 
-    else if(history.includes(userNum.toString()) ){
-      setSrc("https://media.giphy.com/media/XJzinpzkMZZo8KcSP5/giphy.gif")
-       setMsg('You already have tried this number!!')
-      
-     }
-    
+    //  Order
 
-     else if (chance <= 1 ) {
+    if (userNum > 100) {
+      setSrc("https://media.giphy.com/media/XJzinpzkMZZo8KcSP5/giphy.gif");
+      setMsg("Please Choose Less Than 101");
+    } else if (history.includes(userNum.toString())) {
+      setSrc("https://media.giphy.com/media/XJzinpzkMZZo8KcSP5/giphy.gif");
+      setMsg("You already have tried this number!!");
+    } else if (chance <= 1) {
       setChance(chance - 1);
-      setSrc("https://media.giphy.com/media/FgjKGypLCAety/giphy.gif")
+      setSrc("https://media.giphy.com/media/FgjKGypLCAety/giphy.gif");
       setGameOver(true);
-    }
-     else if (randomNum > userNum ) {
+    } else if (randomNum > userNum) {
       setChance(chance - 1);
-      setSrc('https://media.giphy.com/media/3625U4ote7MTAaGi9n/giphy.gif')
+      setSrc("https://media.giphy.com/media/3625U4ote7MTAaGi9n/giphy.gif");
       setMsg("up");
-    }
-    else if (randomNum < userNum ) {
+    } else if (randomNum < userNum) {
       setChance(chance - 1);
-      setSrc("https://media.giphy.com/media/jOnrjNTgv0RnU8bG80/giphy.gif")
+      setSrc("https://media.giphy.com/media/jOnrjNTgv0RnU8bG80/giphy.gif");
       setMsg("down!");
+    } else {
+      setMsg("winner");
+      setSrc("https://media.giphy.com/media/3o72FcJmLzIdYJdmDe/giphy.gif");
+      setGameOver(true);
+    
     }
 
-     else {
-      setMsg("winner");
-      setSrc("https://media.giphy.com/media/3o72FcJmLzIdYJdmDe/giphy.gif")
-      setGameOver(true);
-      console.log(gameOver);
-    }
-   
-    history.push(userNum.toString())
-   
+    history.push(userNum.toString());
   };
 
- 
- 
-// Reset Button
+  // Reset Button
   const reset = () => {
     setUserNum("");
     setRandomNum("");
@@ -95,26 +75,40 @@ const Play = () => {
     setGameOver(false);
     setChance(5);
     setHistory([]);
-    setSrc("")
+    setSrc("");
+ setSrc("https://media.giphy.com/media/PKxsxsl3aOH1ihZ3Um/giphy.gif");
   };
 
-  console.log(less);
-  console.log(history)
+ 
   return (
-    <div className='Play'>
-      
+    <div className="Play">
       <h2>remaining chance:{chance}</h2>
-      <img src={src}/>
-     
+      <img src={src} />
+
       <h2>{msg}</h2>
 
-      <form className='Play-form' onSubmit={submitBtn}>
-        <input className='Play-input' type="number" onChange={handleChange} ref={focusInput} />
-        {gameOver !== true ? <button className='Play-submit' onClick={makeFocus}>Go</button> : ""}
+      <form className="Play-form" onSubmit={submitBtn}>
+        <input
+          className="Play-input"
+          type="number"
+          onChange={handleChange}
+          ref={focusInput}
+        />
+        {gameOver !== true ? (
+          <button className="Play-submit" onClick={makeFocus}>
+            Go
+          </button>
+        ) : (
+          ""
+        )}
       </form>
-      <button className='Play-reset' onClick={reset}>Reset</button>
+      <button className="Play-reset" onClick={reset}>
+        Reset
+      </button>
       <p>*5번의 기회안에 1부터100까지 번호중 정답을 맞춰주세요!!*</p>
-      <p>*you can guess the correct number between 1 and 100 in five attempts.* </p>
+      <p>
+        *you can guess the correct number between 1 and 100 in five attempts.*{" "}
+      </p>
     </div>
   );
 };
